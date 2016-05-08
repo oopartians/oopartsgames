@@ -4,4 +4,18 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    div#topbar(class='')
+      div(class='row')
+        div(class='col-md-12')
+          div#site_logo
+            a#logoicon(href='#home')
+              img#logoiconimg(src='/images/logo/logo.png')
+
+        div#menubar(class='')
+          a#btn_gamelobby(class='menu_item', href='#gamelobby')
+            게임로비
+          a#btn_signin(class='menu_item', href='#signin')
+            로그인
+          a#btn_signup(class='menu_item', href='#signup')
+            회원가입
     block content
