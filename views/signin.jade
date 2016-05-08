@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  form#slick-login
+    label(for="username")
+      username
+    input(type="text", name="username", class="placeholder", placeholder="username")
+    label(for="password")
+      password
+    input(type="password", name="password", class="placeholder", placeholder="password")
+    input(type="submit", value="Sign in")
