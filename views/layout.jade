@@ -2,23 +2,27 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/jquery-confirm.min.css')
     script(type='text/javascript', src='http://code.jquery.com/jquery-latest.min.js')
     script(src='http://www.modernizr.com/downloads/modernizr-latest.js')
     script(type='text/javascript', src='/javascripts/placeholder.js')
+    script(type='text/javascript', src='/javascripts/jquery-confirm.min.js')
   body
     div#topbar(class='')
       div(class='row')
         div(class='col-md-12')
           div#site_logo
-            a#logoicon(href='#home')
+            a#logoicon(href='/')
               img#logoiconimg(src='/images/logo/logo.png')
 
         div#menubar(class='')
-          a#btn_gamelobby(class='menu_item', href='#gamelobby')
-            게임로비
-          a#btn_signin(class='menu_item', href='#signin')
-            로그인
-          a#btn_signup(class='menu_item', href='#signup')
-            회원가입
+          if login_username
+            a#btn_gamelobby(class='menu_item', href='#gamelobby') 게임로비
+            a#btn_gamelobby(class='menu_item', href='#gamelobby') 게임생성
+            a#btn_gamelobby(class='menu_item', href='#gamelobby') 기록실
+            a#btn_signup(class='menu_item', href='#signup') 로그아웃
+            a#btn_signup(class='menu_item', href='#signup') 환영합니다 #{login_username}
+              
     block content

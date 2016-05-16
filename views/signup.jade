@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  //
+    div#slick-login-div
+      div#intro
+        h1.display-heading-1 OOPARTS Games
+        p.display-intro OOPARTS Games는 한양대학교 게임개발동아리 오파츠의 웹게임 배포 사이트입니다.
+  form#slick-login(method='POST', action='/signup')
+    label(for="username")
+      username
+    input(type="text", name="username", class="placeholder", placeholder="Username" value=(pre_username ? "#{pre_username}" : ''))
+    label(for="password")
+      password
+    input(type="password", name="password", class="placeholder", placeholder="Password")
+    input(type="password", name="password2", class="placeholder", placeholder="Password confirmation")
+    input(type="text", name="description", class="placeholder", placeholder="Self description" value=(pre_description ? "#{pre_description}" : ""))
+    input#input-signup(type="submit", value="Sign up")
+
+  if signup_failed
+    script(type='text/javascript').
+      $.alert({
+        title: 'Sign up failed',
+        content: "#{signup_failed_reason}",
+        confirmButtonClass: 'btn-info'
+      });

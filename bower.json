@@ -1,0 +1,20 @@
+{
+  "name": "oopartsgames",
+  "description": "Oopartsgames is website to publish webgames from OOPARTS which is club of Hanyang University",
+  "main": "app.js",
+  "authors": [
+    "Cona <hyeonso5@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Cona19/MyGameServer",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-confirm2": "craftpip/jquery-confirm#^2.5.1"
+  }
+}

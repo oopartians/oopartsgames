@@ -4,9 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var session = require('express-session');//To store session.
 
 var app = express();
 
@@ -21,9 +19,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+	secret: "random secret value",
+	cookie: {maxAge:60 * 60 * 1000, httpOnly:true},//Cookie expires 60 minutes.(imported from tripmaster, so I don't know exact meaning.)
+	resave: false,
+	rolling: true,
+	saveUninitialized: true
+}));
 
-app.use('/', routes);
-app.use('/users', users);
+//base---------------------------------
+app.get('/*', function(req, res, next){
+	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0'); 
+	next();
+});
+
+app.use('/', require('./routes/index'));
+app.use('/signin', require('./routes/signin'));
+app.use('/signup', require('./routes/signup'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,13 +1,14 @@
+/* GET home page. */
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Ooparts games' });
-});
-
-router.get('/test', function(req, res, next) {
-  res.render('signin', { title: 'Ooparts games' });
+router.get('/', function(req, res){
+  if (req.session.login_username){
+    res.render('index', {login_username: req.session.login_username});
+  }
+  else{
+    res.render('signin', {});
+  }
 });
 
 module.exports = router;

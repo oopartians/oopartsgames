@@ -1,4 +1,4 @@
-/*
+*
 CSS RESET
 http://meyerweb.com/eric/tools/css/reset/
 v2.0 | 20110126
@@ -142,6 +142,21 @@ body {
 }
 
 /* Login part CSS*/
+.display-heading-1{
+	font-size:36px;
+	font-weight:300;
+	color:white;
+}
+.display-intro{
+	margin-bottom:40px;
+	font-size:20px;
+	font-weight:300;
+	line-height:1.4;
+	color:white;
+}
+
+#slick-login-div{
+}
 
 #slick-login {
 	width: 220px;
@@ -152,6 +167,7 @@ body {
 	margin-left: -110px;
 	margin-top: -75px;
 
+	
 	-webkit-animation: login 1s ease-in-out;
 	-moz-animation: login 1s ease-in-out;
 	-ms-animation: login 1s ease-in-out;
@@ -209,7 +225,7 @@ body {
 	margin-top: 0px;
 }
 
-#slick-login input[type="submit"] {
+#input-signin {
 	width: 100%;
 	height: 50px;
 	margin-top: 7px;
@@ -244,7 +260,7 @@ body {
 	transition: all .1s ease-in-out;
 }
 
-#slick-login input[type="submit"]:hover {
+#input-signin:hover {
 	background-color: #5f73e9;
 	background-image: -webkit-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
 	background-image: -moz-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
@@ -257,7 +273,7 @@ body {
 	margin-top: 10px;
 }
 
-#slick-login input[type="submit"]:active {
+#input-signin:active {
 	background-color: #7588e1;
 	background-image: -webkit-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
 	background-image: -moz-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
@@ -268,6 +284,68 @@ body {
 	-webkit-box-shadow: inset 0px 1px 0px #93a9e9;
 	box-shadow: inset 0px 1px 0px #93a9e9;
 }
+
+/* Signup CSS */
+#input-signup {
+	width: 100%;
+	height: 50px;
+	margin-top: 7px;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	text-shadow: 0px -1px 0px #75c868;
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, .49);
+
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+	border-radius: 6px;
+
+	background-color: #6dc066;
+	background-image: -webkit-linear-gradient(bottom, #6dc066 0%, #91cf89 100%);
+	background-image: -moz-linear-gradient(bottom, #6dc066 0%, #91cf89 100%);
+	background-image: -o-linear-gradient(bottom, #6dc0660%, #91cf89 100%);
+	background-image: -ms-linear-gradient(bottom, #6dc066 0%, #91cf89 100%);
+	background-image: linear-gradient(bottom, #6dc066 0%, #91cf89 100%);
+	
+	-webkit-box-shadow: inset 0px 1px 0px #a7d9a3;
+	box-shadow: inset 0px 1px 0px #a7d9a3;
+	
+	cursor: pointer;
+
+	-webkit-transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	-ms-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+
+#input-signup:hover {
+	background-color: #78cd75;
+	background-image: -webkit-linear-gradient(bottom, #78cd75 0%, #98d293 100%);
+	background-image: -moz-linear-gradient(bottom, #78cd75 0%, #98d293 100%);
+	background-image: -o-linear-gradient(bottom, #78cd75 0%, #98d293 100%);
+	background-image: -ms-linear-gradient(bottom, #78cd75 0%, #98d293 100%);
+	background-image: linear-gradient(bottom, #78cd75 0%, #98d293 100%);
+
+	-webkit-box-shadow: inset 0px 1px 0px #a7d9a3;
+	box-shadow: inset 0px 1px 0px #a7d9a3;
+	margin-top: 10px;
+}
+
+#input-signup:active {
+	background-color: #8acc84;
+	background-image: -webkit-linear-gradient(bottom, #8acc84 0%, #78cd75 100%);
+	background-image: -moz-linear-gradient(bottom, #8acc84 0%, #78cd75 100%);
+	background-image: -o-linear-gradient(bottom, #8acc84 0%, #78cd75 100%);
+	background-image: -ms-linear-gradient(bottom, #8acc84 0%, #78cd75 100%);
+	background-image: linear-gradient(bottom, #8acc84 0%, #78cd75 100%);
+
+	-webkit-box-shadow: inset 0px 1px 0px #a7d9a3;
+	box-shadow: inset 0px 1px 0px #a7d9a3;
+}
+
 
 /* Menu bar CSS */
 
