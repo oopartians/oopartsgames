@@ -2,27 +2,61 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/stylesheets/jquery-confirm.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
     script(type='text/javascript', src='http://code.jquery.com/jquery-latest.min.js')
-    script(src='http://www.modernizr.com/downloads/modernizr-latest.js')
+    script(type='text/javascript', src='/javascripts/bootstrap.min.js')
     script(type='text/javascript', src='/javascripts/placeholder.js')
     script(type='text/javascript', src='/javascripts/jquery-confirm.min.js')
+    script(type='text/javascript').
+      function about_confirm(){
+        $.confirm({
+          title: 'About',
+          backgroundDismiss: true,
+          content: 'Copyright(c)2016 OOPARTS All rights reserved.',
+          confirmButtonClass: 'btn-info',
+          cancelButton: false
+        });
+      }
+      function contact_confirm(){
+        $.confirm({
+          title: 'Contact',
+          backgroundDismiss: true,
+          content: 'Please email to ooparts@ooparts.ooparts',
+          confirmButtonClass: 'btn-info',
+          cancelButton: false
+        });
+      }
   body
-    div#topbar(class='')
-      div(class='row')
-        div(class='col-md-12')
-          div#site_logo
-            a#logoicon(href='/')
-              img#logoiconimg(src='/images/logo/logo.png')
+    nav(class="navbar navbar-inverse navbar-fixed-top")
+      div.container
+        div.navbar-header
+          button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+            span(class="sr-only") Toggle navigation
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+          a(class="navbar-brand", href="#") OOpartsGames
+        div(id="navbar", class="navbar-collapse collapse")
+          ul(class="nav navbar-nav")
+            li(class="active")
+              a(href="#") Home
+            if login_username
+              li
+                a(href="#gamelobby" onclick="about_confirm();") Gamelobby
+              li
+                a(href="#newgame" onclick="contact_confirm();") New Game
+              li
+                a(href="#myinfo" onclick="contact_confirm();") My Info
+          ul(class="nav navbar-nav navbar-right")
+            if login_username
+              li
+                a(href="/signout") Signout 
+            li
+              a(href="#about" onclick="about_confirm();") About
+            li
+              a(href="#contact" onclick="contact_confirm();") Contact
 
-        div#menubar(class='')
-          if login_username
-            a#btn_gamelobby(class='menu_item', href='#gamelobby') 게임로비
-            a#btn_gamelobby(class='menu_item', href='#gamelobby') 게임생성
-            a#btn_gamelobby(class='menu_item', href='#gamelobby') 기록실
-            a#btn_signup(class='menu_item', href='#signup') 로그아웃
-            a#btn_signup(class='menu_item', href='#signup') 환영합니다 #{login_username}
-              
     block content
