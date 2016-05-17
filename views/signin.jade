@@ -1,25 +1,18 @@
 extends layout
 
 block content
-  //
-    div#slick-login-div
-      div#intro
-        h1.display-heading-1 OOPARTS Games
-        p.display-intro OOPARTS Games는 한양대학교 게임개발동아리 오파츠의 웹게임 배포 사이트입니다.
-  
+  script(type='text/javascript', src='/javascripts/sha512.js')
+   
   form#slick-login(method='POST', action='/signin')
     label(for="username").
       username
-    if pre_username
-      input(type="text", name="username", class="placeholder", placeholder="username" value="#{pre_username}")
-    else
-      input(type="text", name="username", class="placeholder", placeholder="username")
+    input(type="text", name="username", class="placeholder", placeholder="username" value=(pre_username ? "#{pre_username}" : ""))
 
     label(for="password").
       password
     input(type="password", name="password", class="placeholder", placeholder="password")
-    input#input-signin(type="submit", value="Sign in")
-
+    button#input-signin Sign in
+    
   if signin_failed
     script(type='text/javascript').
       $.alert({
@@ -27,3 +20,4 @@ block content
         content: 'Password is not correct!',
         confirmButtonClass: 'btn-info'
       });
+  script(type='text/javascript', src='/javascripts/signin.js')

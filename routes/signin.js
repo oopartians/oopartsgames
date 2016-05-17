@@ -29,7 +29,7 @@ router.post('/', function(req, res){
         res.redirect('/signup');
       }
       else{
-        res.render('signin', {signin_failed: true });
+        res.render('signin', {signin_failed: true , pre_username: req.body.username});
       }
     }
   };
