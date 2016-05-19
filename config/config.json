@@ -3,18 +3,15 @@
     "dialect": "sqlite",
     "storage": "./db.development.sqlite"
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
   "production": {
     "username": "oopartsgames",
     "password": "ooparts",
     "database": "oopartsgames",
     "host": "localhost",
-    "dialect": "mariadb"
+    "dialect": "mariadb",
+    "define": {
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
+    }
   }
 }
