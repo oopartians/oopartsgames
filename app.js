@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-	secret: "random secret value",
+	secret: "Best Game Develop Club in Universe",
 	cookie: {maxAge:60 * 60 * 1000, httpOnly:true},//Cookie expires 60 minutes.(imported from tripmaster, so I don't know exact meaning.)
 	resave: false,
 	rolling: true,
