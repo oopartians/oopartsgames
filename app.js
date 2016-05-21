@@ -37,6 +37,7 @@ app.use('/', require('./routes/index'));
 app.use('/signin', require('./routes/signin'));
 app.use('/signup', require('./routes/signup'));
 app.use('/signout', require('./routes/signout'));
+app.use('/room', require('./routes/room'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

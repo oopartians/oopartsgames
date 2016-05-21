@@ -1,18 +1,18 @@
 extends layout
 
 block content
-  script(type='text/javascript', src='/javascripts/sha512.js')
+  script(type='text/javascript', src='/javascripts/CryptoJS/sha512.js')
 
-  form#slick-login(method='POST', action='/signup')
+  form#slick-form.signup(method='POST', action='/signup')
     label(for="username")
       username
-    input(type="text", name="username", class="placeholder", placeholder="New username" value=(pre_username ? "#{pre_username}" : ''))
+    input.slick-form-fit(type="text", name="username", class="placeholder", placeholder="New username", value=(pre_username ? "#{pre_username}" : ''), required)
     label(for="password")
       password
-    input(type="password", name="password", class="placeholder", placeholder="New password")
-    input(type="password", name="password2", class="placeholder", placeholder="New password confirmation")
-    input(type="text", name="description", class="placeholder", placeholder="New self description" value=(pre_description ? "#{pre_description}" : ""))
-    button#input-signup Sign up
+    input.slick-form-fit(type="password", name="password", class="placeholder", placeholder="New password", required, autofocus)
+    input.slick-form-fit(type="password", name="password2", class="placeholder", placeholder="New password confirmation", required)
+    input.slick-form-fit(type="text", name="description", class="placeholder", placeholder="New self description" value=(pre_description ? "#{pre_description}" : ""))
+    button#input-submit.slick-form-green-btn Sign up
     script(type='text/javascript' src='/javascripts/signup.js')
 
   if signup_failed

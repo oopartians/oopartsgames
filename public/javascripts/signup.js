@@ -1,6 +1,10 @@
-$("#input-signup").click(function(){
-  var passwd = $("#slick-login input[name='password']")[0];
-  var passwd2 = $("#slick-login input[name='password2']")[0];
+$("#input-submit").click(function(){
+  var passwd = $("input[name='password']")[0];
+  var passwd2 = $("input[name='password2']")[0];
+
+  if (passwd.value == "" || passwd2.value == "")
+    return true;
+
   if (passwd.value != passwd2.value){
     $.alert({
       title: 'Sign up failed',

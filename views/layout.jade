@@ -2,14 +2,19 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
-    link(rel='stylesheet', href='/stylesheets/jquery-confirm.min.css')
+    meta(name="viewport", content="width=device-width, user-scalable=no")
+    link(rel='stylesheet', href='/stylesheets/bootstrap/bootstrap.min.css')
+    //
+      link(rel='stylesheet', href='/stylesheets/bootstrap/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/jquery-confirm2/jquery-confirm.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-select-1.10.0/bootstrap-select.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(type='text/javascript', src='http://code.jquery.com/jquery-latest.min.js')
-    script(type='text/javascript', src='/javascripts/bootstrap.min.js')
+    script(type='text/javascript', src='/javascripts/bootstrap/bootstrap.min.js')
     script(type='text/javascript', src='/javascripts/placeholder.js')
-    script(type='text/javascript', src='/javascripts/jquery-confirm.min.js')
+    script(type='text/javascript', src='/javascripts/jquery-confirm2/jquery-confirm.min.js')
+    script(type='text/javascript', src='/javascripts/bootstrap-select-1.10.0/bootstrap-select.min.js')
+    script(type='text/javascript', src='/javascripts/bootstrap-select-1.10.0/defaults-ko_KR.min.js')
     script(type='text/javascript').
       function about_confirm(){
         $.confirm({
@@ -38,16 +43,14 @@ html
             span(class="icon-bar")
             span(class="icon-bar")
             span(class="icon-bar")
-          a(class="navbar-brand", href="#") OOpartsGames
+          a(class="navbar-brand", href="/") OOpartsGames
         div(id="navbar", class="navbar-collapse collapse")
           ul(class="nav navbar-nav")
-            li(class="active")
-              a(href="#") Home
             if login_username
               li
                 a(href="#gamelobby" onclick="about_confirm();") Gamelobby
               li
-                a(href="#newgame" onclick="contact_confirm();") New Game
+                a(href="/room/new") New Game
               li
                 a(href="#myinfo" onclick="contact_confirm();") My Info
           ul(class="nav navbar-nav navbar-right")

@@ -1,17 +1,17 @@
 extends layout
 
 block content
-  script(type='text/javascript', src='/javascripts/sha512.js')
+  script(type='text/javascript', src='/javascripts/CryptoJS/sha512.js')
    
-  form#slick-login(method='POST', action='/signin')
+  form#slick-form.signin(method='POST', action='/signin')
     label(for="username").
       username
-    input(type="text", name="username", class="placeholder", placeholder="username" value=(pre_username ? "#{pre_username}" : ""))
+    input.slick-form-fit(type="text", name="username", class="placeholder", placeholder="username" value=(pre_username ? "#{pre_username}" : ""), required, autofocus)
 
     label(for="password").
       password
-    input(type="password", name="password", class="placeholder", placeholder="password")
-    button#input-signin Sign in
+    input.slick-form-fit(type="password", name="password", class="placeholder", placeholder="password", required)
+    button#input-submit.slick-form-blue-btn Sign in
     
   if signin_failed
     script(type='text/javascript').

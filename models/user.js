@@ -6,11 +6,11 @@ module.exports = function(sequelize, DataTypes) {
     password: { type: DataTypes.STRING, notNull: true},
     description: { type: DataTypes.STRING, notNull: true}
   }, {
+    comment : "This table is User's table who signed up.",
     classMethods: {
-      /*associate: function(models) {
-        User.hasMany(models.Task)
+      associate: function(models) {
+        User.belongsTo(models.Room, {foreignKey: 'room_id'});
       }
-      */
     }
   });
 

@@ -1,0 +1,61 @@
+extends layout
+
+block content
+
+  script(type='text/javascript', src='/javascripts/CryptoJS/sha512.js')
+   
+  form#slick-form.create_room(method='POST', action='/room/new')
+    label(for="game_name").
+      Game name
+    select.slick-form-fit(name="game_name")
+      - for (var i in game_list)
+        option(value='#{game_list[i].game_name}', selected=(pre_game_name== game_list[i].game_name)) #{game_list[i].game_name}
+    label(for="room_name").
+      Room name
+    input.slick-form-fit(type="text", name="room_name", class="placeholder", placeholder="Room name" value=(pre_room_name? "#{pre_room_name}" : ""), required, autofocus)
+    label(for="password").
+      Password
+    input.slick-form-fit(type="password", name="password", class="placeholder", placeholder="password")
+
+    label(for="").
+      Time rule
+    select.slick-form-fit(name="main_time")
+      option(value='0', selected=(pre_main_time == '0')) 기본시간없음
+      option(value='30', selected=(pre_main_time == '0')) 30분
+      option(value='60', selected=(pre_main_time == '0')) 1시간
+      option(value='90', selected=(pre_main_time == '0')) 1시간30분
+      option(value='120', selected=(pre_main_time == '0')) 2시간
+      option(value='150', selected=(pre_main_time == '0')) 2시간30분
+      option(value='180', selected=(pre_main_time == '0')) 3시간
+    .row.slick-form-row
+      .col-xs-6.col-md-6
+        select.slick-form-fit.form-control(name="byoyomi")
+          option(value='30', selected=(pre_byoyomi == '30')) 30초
+          option(value='60', selected=(pre_byoyomi == '60')) 1분
+          option(value='120', selected=(pre_byoyomi == '120')) 2분
+          option(value='180', selected=(pre_byoyomi == '180')) 3분
+          option(value='240', selected=(pre_byoyomi == '240')) 4분
+          option(value='300', selected=(pre_byoyomi == '300')) 5분
+      .col-xs-6.col-md-6
+        select.slick-form-fit.form-control(name="num_byoyomi")
+          option(value='1', selected=(pre_num_byoyomi == '1')) 1회
+          option(value='2', selected=(pre_num_byoyomi == '2')) 2회
+          option(value='3', selected=(pre_num_byoyomi == '3')) 3회
+          option(value='4', selected=(pre_num_byoyomi == '4')) 4회
+          option(value='5', selected=(pre_num_byoyomi == '5')) 5회
+          option(value='6', selected=(pre_num_byoyomi == '6')) 6회
+          option(value='7', selected=(pre_num_byoyomi == '7')) 7회
+          option(value='8', selected=(pre_num_byoyomi == '8')) 8회
+          option(value='9', selected=(pre_num_byoyomi == '9')) 9회
+          option(value='10', selected=(pre_num_byoyomi == '10')) 10회
+
+    button#input-submit.slick-form-blue-btn 방 생성
+    
+  if create_room_failed
+    script(type='text/javascript').
+      $.alert({
+        title: 'Create room failed',
+        content: '#{create_room_failed_reason}',
+        confirmButtonClass: 'btn-info'
+      });
+  script(type='text/javascript', src='/javascripts/create_room.js')

@@ -28,3 +28,21 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+/* play.js
+"use strict";
+
+module.exports = function(sequelize, DataTypes) {
+  var Play = sequelize.define("Play", {
+  }, {
+    comment : "Play table connect user A and room B so it means  A joined B.",
+    classMethods: {
+      associate: function(models) {
+        Play.belongsTo(models.User, {foreignkey: 'username'});
+        Play.belongsTo(models.Room, {foreignkey: 'roomid'});
+      }
+    }
+  });
+
+  return Play;
+};
+*/

@@ -11,7 +11,6 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	height:100%;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -19,7 +18,14 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
 	display: block;
 }
 
+html,body{
+  height:100%;
+  min-height:100%;
+}
+
 body {
+  padding-top: 70px;
+  padding-bottom: 30px;
 	line-height: 1;
 }
 
@@ -41,8 +47,8 @@ table {
 	border-spacing: 0;
 }
 
-/* CSS Animations */
-@keyframes "login" {
+/* Signin Animations */
+@keyframes "slick-signin"{
  0% {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
    	filter: alpha(opacity=0);
@@ -58,7 +64,7 @@ table {
 
 }
 
-@-moz-keyframes login {
+@-moz-keyframes "slick-signin"{
  0% {
    filter: alpha(opacity=0);
    opacity: 0;
@@ -72,7 +78,7 @@ table {
 
 }
 
-@-webkit-keyframes "login" {
+@-webkit-keyframes "slick-signin" {
  0% {
    filter: alpha(opacity=0);
    opacity: 0;
@@ -86,7 +92,7 @@ table {
 
 }
 
-@-ms-keyframes "login" {
+@-ms-keyframes "slick-signin" {
  0% {
    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
    filter: alpha(opacity=0);
@@ -102,7 +108,7 @@ table {
 
 }
 
-@-o-keyframes "login" {
+@-o-keyframes "slick-signin" {
  0% {
    filter: alpha(opacity=0);
    opacity: 0;
@@ -116,13 +122,165 @@ table {
 
 }
 
+/* Signup Animations */
+
+@keyframes "slick-signup"{
+ 0% {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   	filter: alpha(opacity=0);
+   	opacity: 0;
+   	margin-top: -80px;
+ }
+ 100% {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   	filter: alpha(opacity=100);
+   	opacity: 1;
+   	margin-top: -105px;
+ }
+
+}
+
+@-moz-keyframes "slick-signup"{
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -80px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -105px;
+ }
+
+}
+
+@-webkit-keyframes "slick-signup" {
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -80px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -105px;
+ }
+
+}
+
+@-ms-keyframes "slick-signup" {
+ 0% {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -80px;
+ }
+ 100% {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -105px;
+ }
+
+}
+
+@-o-keyframes "slick-signup" {
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -80px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -105px;
+ }
+
+}
+
+/* Signup Animations */
+
+@keyframes "slick-create_room"{
+ 0% {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   	filter: alpha(opacity=0);
+   	opacity: 0;
+   	margin-top: -110px;
+ }
+ 100% {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   	filter: alpha(opacity=100);
+   	opacity: 1;
+   	margin-top: -135px;
+ }
+
+}
+
+@-moz-keyframes "slick-create_room"{
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -110px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -135px;
+ }
+
+}
+
+@-webkit-keyframes "slick-create_room" {
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -110px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -135px;
+ }
+
+}
+
+@-ms-keyframes "slick-create_room" {
+ 0% {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -110px;
+ }
+ 100% {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -135px;
+ }
+
+}
+
+@-o-keyframes "slick-create_room" {
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -110px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -135px;
+ }
+
+}
+
 /* Main CSS */
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-body {
+body{
 	font-family: sans-serif;
 	
-	background: url("/images/wallpaper.jpg") no-repeat top center;
+	background: url("/images/wallpaper.jpg") no-repeat top center fixed;
 	/*
 	-webkit-background-size: auto;
 	-moz-background-size: auto;
@@ -141,41 +299,53 @@ body {
 	*/
 }
 
-/* Login part CSS*/
-.display-heading-1{
-	font-size:36px;
-	font-weight:300;
-	color:white;
-}
-.display-intro{
-	margin-bottom:40px;
-	font-size:20px;
-	font-weight:300;
-	line-height:1.4;
-	color:white;
-}
+/* Signin part CSS*/
 
-#slick-login-div{
-}
-
-#slick-login {
-	width: 220px;
+#slick-form.signin{
+  width: 220px;
 	height: 155px;
-	position: absolute;
-	left: 50%;
-	top: 50%;
 	margin-left: -110px;
 	margin-top: -75px;
 
-	
-	-webkit-animation: login 1s ease-in-out;
-	-moz-animation: login 1s ease-in-out;
-	-ms-animation: login 1s ease-in-out;
-	-o-animation: login 1s ease-in-out;
-	animation: login 1s ease-in-out;
+	-webkit-animation: slick-signin 1s ease-in-out;
+	-moz-animation: slick-signin 1s ease-in-out;
+	-ms-animation: slick-signin 1s ease-in-out;
+	-o-animation: slick-signin 1s ease-in-out;
+	animation: slick-signin 1s ease-in-out;
 }
 
-#slick-login label {
+#slick-form.signup{
+  width: 220px;
+	height: 255px;
+	margin-left: -110px;
+	margin-top: -105px;
+
+	-webkit-animation: slick-signup 1s ease-in-out;
+	-moz-animation: slick-signup 1s ease-in-out;
+	-ms-animation: slick-signup 1s ease-in-out;
+	-o-animation: slick-signup 1s ease-in-out;
+	animation: slick-signup 1s ease-in-out;
+}
+#slick-form.create_room{
+  width: 220px;
+	height: 305px;
+	margin-left: -110px;
+	margin-top: -135px;
+
+	-webkit-animation: slick-create_room 1s ease-in-out;
+	-moz-animation: slick-create_room 1s ease-in-out;
+	-ms-animation: slick-create_room 1s ease-in-out;
+	-o-animation: slick-create_room 1s ease-in-out;
+	animation: slick-create_room 1s ease-in-out;
+}
+
+#slick-form{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+#slick-form label {
 	display: none;
 }
 
@@ -183,10 +353,10 @@ body {
     color: #444;
 }
 
-#slick-login input[type="text"],#slick-login input[type="password"] {
+.slick-form-fit{
 	width: 100%;
 	height: 40px;
-	positon: relative;
+	position: relative;
 	margin-top: 7px;
 	font-size: 14px;
 	color: #444;
@@ -216,16 +386,20 @@ body {
 	transition: all .1s ease-in-out;
 }
 
-#slick-login input[type="text"]:focus,#slick-login input[type="password"]:focus {
+.slick-form-fit:focus {
 	-webkit-box-shadow: inset 0px 2px 0px #a7a7a7;
 	box-shadow: inset 0px 2px 0px #a7a7a7;
 }
 
-#slick-login input:first-child {
+.slick-form-fit:first-child {
 	margin-top: 0px;
 }
 
-#input-signin {
+.slick-form-row{
+	margin-top: 7px;
+}
+
+.slick-form-blue-btn{
 	width: 100%;
 	height: 50px;
 	margin-top: 7px;
@@ -260,7 +434,8 @@ body {
 	transition: all .1s ease-in-out;
 }
 
-#input-signin:hover {
+
+.slick-form-blue-btn:hover {
 	background-color: #5f73e9;
 	background-image: -webkit-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
 	background-image: -moz-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
@@ -273,7 +448,7 @@ body {
 	margin-top: 10px;
 }
 
-#input-signin:active {
+.slick-form-blue-btn:active {
 	background-color: #7588e1;
 	background-image: -webkit-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
 	background-image: -moz-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
@@ -286,7 +461,7 @@ body {
 }
 
 /* Signup CSS */
-#input-signup {
+.slick-form-green-btn{
 	width: 100%;
 	height: 50px;
 	margin-top: 7px;
@@ -321,7 +496,7 @@ body {
 	transition: all .1s ease-in-out;
 }
 
-#input-signup:hover {
+.slick-form-green-btn:hover {
 	background-color: #78cd75;
 	background-image: -webkit-linear-gradient(bottom, #78cd75 0%, #98d293 100%);
 	background-image: -moz-linear-gradient(bottom, #78cd75 0%, #98d293 100%);
@@ -334,7 +509,7 @@ body {
 	margin-top: 10px;
 }
 
-#input-signup:active {
+.slick-form-green-btn:active {
 	background-color: #8acc84;
 	background-image: -webkit-linear-gradient(bottom, #8acc84 0%, #78cd75 100%);
 	background-image: -moz-linear-gradient(bottom, #8acc84 0%, #78cd75 100%);
@@ -344,4 +519,32 @@ body {
 
 	-webkit-box-shadow: inset 0px 1px 0px #a7d9a3;
 	box-shadow: inset 0px 1px 0px #a7d9a3;
+}
+
+/* Jumbotron Additional CSS */
+.show-case > p{
+  margin: 5px 0;
+  position: static;
+}
+
+.show-case .navbar .container{
+  width: auto;
+}
+
+.show-case{
+  margin-top: 30px;
+}
+
+/* Create room CSS */
+
+.create-room-el{
+  margin-bottom: 10px;
+}
+
+.create-room-conainer{
+	width: 220px;
+	height: 155px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
 }
