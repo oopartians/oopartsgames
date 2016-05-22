@@ -15,6 +15,7 @@ html
     script(type='text/javascript', src='/javascripts/jquery-confirm2/jquery-confirm.min.js')
     script(type='text/javascript', src='/javascripts/bootstrap-select-1.10.0/bootstrap-select.min.js')
     script(type='text/javascript', src='/javascripts/bootstrap-select-1.10.0/defaults-ko_KR.min.js')
+    script(type='text/javascript', src='/javascripts/chat.js')
     script(type='text/javascript').
       function about_confirm(){
         $.confirm({
@@ -63,3 +64,102 @@ html
               a(href="#contact" onclick="contact_confirm();") Contact
 
     block content
+
+    if login_username
+      .container
+        #chat_window_1.row.chat-window.col-xs-5.col-md-3(style='margin-left:10px;')
+          .col-xs-12.col-md-12
+            .panel.panel-default
+              .panel-heading.top-bar
+                .col-md-6.col-xs-6
+                  h3.panel-title
+                    span.glyphicon.glyphicon-comment
+                    |  Miguel
+                .col-md-4.col-xs-4(style='text-align: right;')
+                  a(href='#')
+                    span#minim_chat_window.glyphicon.glyphicon-minus.icon_minim
+                  a(href='#')
+                    span.glyphicon.glyphicon-remove.icon_close(data-id='chat_window_1')
+              .panel-body.msg_container_base
+                .row.msg_container.base_sent
+                  .col-md-10.col-xs-10
+                    .messages.msg_sent
+                      p
+                        | that mongodb thing looks good, huh?
+                        | tiny master db, and huge document store
+                      time(datetime='2009-11-13T20:00') Timothy • 51 min
+                  .col-md-2.col-xs-2.avatar
+                    img.img-responsive(src='http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg')
+                .row.msg_container.base_receive
+                  .col-md-2.col-xs-2.avatar
+                    img.img-responsive(src='http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg')
+                  .col-md-10.col-xs-10
+                    .messages.msg_receive
+                      p
+                        | that mongodb thing looks good, huh?
+                        | tiny master db, and huge document store
+                      time(datetime='2009-11-13T20:00') Timothy • 51 min
+                .row.msg_container.base_receive
+                  .col-md-2.col-xs-2.avatar
+                    img.img-responsive(src='http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg')
+                  .col-xs-10.col-md-10
+                    .messages.msg_receive
+                      p
+                        | that mongodb thing looks good, huh?
+                        | tiny master db, and huge document store
+                      time(datetime='2009-11-13T20:00') Timothy • 51 min
+                .row.msg_container.base_sent
+                  .col-xs-10.col-md-10
+                    .messages.msg_sent
+                      p
+                        | that mongodb thing looks good, huh?
+                        | tiny master db, and huge document store
+                      time(datetime='2009-11-13T20:00') Timothy • 51 min
+                  .col-md-2.col-xs-2.avatar
+                    img.img-responsive(src='http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg')
+                .row.msg_container.base_receive
+                  .col-md-2.col-xs-2.avatar
+                    img.img-responsive(src='http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg')
+                  .col-xs-10.col-md-10
+                    .messages.msg_receive
+                      p
+                        | that mongodb thing looks good, huh?
+                        | tiny master db, and huge document store
+                      time(datetime='2009-11-13T20:00') Timothy • 51 min
+                .row.msg_container.base_sent
+                  .col-md-10.col-xs-10
+                    .messages.msg_sent
+                      p
+                        | that mongodb thing looks good, huh?
+                        | tiny master db, and huge document store
+                      time(datetime='2009-11-13T20:00') Timothy • 51 min
+                  .col-md-2.col-xs-2.avatar
+                    img.img-responsive(src='http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg')
+              .panel-footer
+                .input-group
+                  input#btn-input.form-control.input-sm.chat_input(type='text', placeholder='Write your message here...')
+                  span.input-group-btn
+                    button#btn-chat.btn.btn-primary.btn-sm Send
+        .btn-group.dropup
+          button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+            span.glyphicon.glyphicon-cog
+            span.sr-only Toggle Dropdown
+          ul.dropdown-menu(role='menu')
+            li
+              a#new_chat(href='#')
+                span.glyphicon.glyphicon-plus
+                |  Novo
+            li
+              a(href='#')
+                span.glyphicon.glyphicon-list
+                |  Ver outras
+            li
+              a(href='#')
+                span.glyphicon.glyphicon-remove
+                |  Fechar Tudo
+            li.divider
+            li
+              a(href='#')
+                span.glyphicon.glyphicon-eye-close
+                |  Invisivel
+

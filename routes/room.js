@@ -28,24 +28,23 @@ router.get('/new', function(req, res){
 });
 
 router.get('/:room_id([0-9]+)', function(req, res){
-  if (req.session.room_id == req.param.room_id){
-    res.send('success');
+  if (req.session.room_id && req.session.room_id.toString() == req.params.room_id){
+    result_handler = function(req, res, result){
+      if (result.worked){
+        res.render('waiting_room', {
+          login_username: req.session.login_username,
+          game_info: result.game_info});
+      }
+      else{
+        res.send('fail');
+      }
+    };
+
+    logic_game.select_game_from_room_id(req, res, result_handler);
   }
   else{
     res.send('fail');
   }
-  /*
-  result_handler = function(req, res, result){
-    if (result.worked){
-      res.send(req.param.room_id);
-    }
-    else{
-      res.send(.room_id);
-    }
-  };
-
-  logic.check_room(req, res, result_handler);
-  */
 });
 
 router.post('/new', function(req, res){
@@ -58,6 +57,7 @@ router.post('/new', function(req, res){
     }
     else{
       res.render('create_room', {
+        login_username: req.session.login_username,
         create_room_failed: true, create_room_failed_reason: result.reason,
         pre_room_name: req.body.room_name, pre_game_name: req.body.game_name,
         pre_main_time: req.body.main_time, pre_byoyomi: req.body.byoyomi,
