@@ -8,12 +8,16 @@ var app = require('../app');
 var debug = require('debug')('oopartsgames:server');
 var http = require('http');
 var models = require('../models');
+var Primus = require('primus');
+var Rooms = require('primus-rooms');
+var socks = require('../socks');
+var primus_session = require('../middleware/primus_session');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(/*process.env.PORT || */'80');
+var port = normalizePort(process.env.PORT || '80');
 app.set('port', port);
 
 /**
@@ -21,11 +25,56 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var primus = new Primus(server, {transformer: 'SOCKJS'});
+
+/*
+Room concept of This part is NOT equal to room model of sequelize.
+*/
+
+/*
+Share session data using middleware
+*/
+primus.before('cookies', app.get('cookie_inst'));
+primus.before('session', primus_session, {store: app.get('store_inst')});
+
+primus.use('rooms', Rooms);
+primus.on('connection', function(spark){
+  spark.on('data', function(data){
+    data = data || {};
+    var action = data.action;
+    var room = data.room;
+    if ('join' === action){
+      spark.join(room, function(){
+        console.log(spark.id + ' joined ' + room);
+        socks[room].open(spark, data.data);
+      });
+    }
+    else if ('leave' === action){
+      spark.leave(room, function(){
+        console.log(spark.id + ' leaved ' + room);
+        socks[room].close(spark, data.data);
+      });
+    }
+    else{
+      console.log(spark.id + ' signaled to ' + room);
+      socks[room].recv(spark, data.data);
+    }
+  });
+});
+primus.on('disconnection', function(spark){
+  var rooms = spark.rooms();
+  console.log(spark + ' disconnected');
+  for(var i = 0; i < rooms.length; i++){
+    socks[rooms[i]].close(spark, {});
+  }
+  spark.leaveAll();
+});
+
+primus.save(__dirname + '/../public/javascripts/primus.js');
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 models.sequelize.sync().then(function(){
 	server.listen(port);
 	server.on('error', onError);

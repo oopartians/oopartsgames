@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  script(type='text/javascript', src='/javascripts/CryptoJS/sha512.js')
+  script(type='text/javascript', src='/javascripts/primus.js')
+  script(type='text/javascript').
+    function click_one_room(room_id, game_name, room_name){
+      $("input[name='room_id']")[0].value = room_id;
+      $("input[name='game_name']")[0].value = game_name;
+      $("input[name='room_name']")[0].value = room_name;
+    }
+
+  form#slick-form.create_room(method='POST', action='/room/lobby')
+    label(for="room_id").
+      Room id
+    input.slick-form-fit(type="text", name="room_id", class="placeholder", placeholder="Room id" value=(pre_room_id? "#{pre_room_id}" : ""), required, autofocus)
+    label(for="password").
+      Password
+    input.slick-form-fit(type="password", name="password", class="placeholder", placeholder="Password")
+    button#input-submit.slick-form-blue-btn 방 입장
+
+    //
+      label(for="game_name").
+        Game name
+      input.slick-form-fit(type="text", name="game_name", class="placeholder", placeholder="Game name" value=(pre_game_name? "#{pre_game_name}" : ""))
+      label(for="room_name").
+        Room name
+      input.slick-form-fit(type="text", name="room_name", class="placeholder", placeholder="Room name" value=(pre_room_name? "#{pre_room_name}" : ""))
+
+    div#room-list-div.list-group.slick-form-ul
+    
+  if join_room_failed_reason
+    script(type='text/javascript').
+      $.alert({
+        title: 'Join room failed',
+        content: '#{join_room_failed_reason}',
+        confirmButtonClass: 'btn-info'
+      });
+  script(type='text/javascript', src='/javascripts/gamelobby.js')

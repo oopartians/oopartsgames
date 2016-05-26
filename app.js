@@ -4,9 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session');//To store session.
+var express_session = require('express-session');//To store session.
 
 var app = express();
+
+/*
+ * TO share session between Express and Primus
+ */
+var secret = "Best Game Develop Club in Universe";
+var cookies = cookieParser(secret);
+var store = new express_session.MemoryStore();
+
+app.set('cookie_inst', cookies);
+app.set('store_inst', store);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -17,14 +27,15 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookies);
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-	secret: "Best Game Develop Club in Universe",
+app.use(express_session({
+	secret: secret,
 	cookie: {maxAge:60 * 60 * 1000, httpOnly:true},//Cookie expires 60 minutes.(imported from tripmaster, so I don't know exact meaning.)
+	saveUninitialized: true,
 	resave: false,
 	rolling: true,
-	saveUninitialized: true
+  store: store
 }));
 
 //base---------------------------------

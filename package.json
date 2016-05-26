@@ -16,7 +16,10 @@
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
     "path": "^0.12.7",
+    "primus": "^5.2.1",
+    "primus-rooms": "^3.4.1",
     "sequelize": "^3.23.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "sockjs": "^0.3.17"
   }
 }

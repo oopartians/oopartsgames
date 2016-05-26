@@ -15,7 +15,7 @@ block content
     button#input-submit.slick-form-green-btn Sign up
     script(type='text/javascript' src='/javascripts/signup.js')
 
-  if signup_failed
+  if signup_failed_reason
     script(type='text/javascript').
       $.alert({
         title: 'Sign up failed',

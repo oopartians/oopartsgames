@@ -51,7 +51,7 @@ block content
 
     button#input-submit.slick-form-blue-btn 방 생성
     
-  if create_room_failed
+  if create_room_failed_reason
     script(type='text/javascript').
       $.alert({
         title: 'Create room failed',

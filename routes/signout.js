@@ -3,7 +3,8 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res){
-  req.session.login_username = undefined
+  delete req.session.login_username;
+  delete req.session.room_id;
   res.redirect('/');
 });
 

@@ -4,17 +4,17 @@ block content
   script(type='text/javascript').
     function game_info_confirm(){
       $.confirm({
-        title: '#{game_info.game_name}',
+        title: '#{room_info.Game.game_name}',
         backgroundDismiss: true,
-        content: "#{game_info.description}",
+        content: "#{room_info.Game.description}",
         confirmButtonClass: 'btn-info',
         cancelButton: false
       });
     }
 
-  form#slick-form.create_room(method='POST', action='')
+  #slick-form.create_room
     a(href="#", onclick="game_info_confirm();", class="thumbnail")
-      img(src="/images/games/#{game_info.game_name}.jpg", alt="#{game_info.game_name}")
+      img(src="/images/games/#{room_info.Game.game_name}.jpg", alt="#{room_info.Game.game_name}")
 
     div.dropdown
       a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false")
@@ -24,7 +24,7 @@ block content
         li.dropdown-header 방 제목
         li.slick-form-li #{room_info.room_name}
         li.dropdown-header 최대인원
-        li.slick-form-li #{room_info.max_player}명
+        li.slick-form-li #{room_info.Game.max_player}명
         li.divider
         li.dropdown-header 기본시간
         li.slick-form-li #{room_info.main_time}분
@@ -34,6 +34,6 @@ block content
         li.slick-form-li #{room_info.num_byoyomi}회
 
     button#input-submit.slick-form-blue-btn 준비
-    ul.list-group.slick-form-ul
-      - for (var i in user_list)
-        li.list-group-item #{user_list[i].username}
+    div#user-list-div.list-group.slick-form-ul
+
+  script(type='text/javascript', src='/javascripts/waiting_room.js')
