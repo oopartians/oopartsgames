@@ -14,6 +14,7 @@ $("#input-submit").click(function(){
     return false;
   }
   passwd.value = CryptoJS.SHA512(passwd.value);
+  passwd2.value = CryptoJS.SHA512(passwd2.value);
   return true;
 });
 
