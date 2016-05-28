@@ -28,11 +28,11 @@ primus.on("data", function(data){
   }
   else if (data.type == "connection_check"){
     for (var i = 0; i < a_list.length; i++){
-      if (jQuery.inArray(connected_user_list.a_list[i].innerHTML, data.connected_user_list) == -1){
+      if (jQuery.inArray(a_list[i].innerHTML, data.connected_user_list) == -1){
         a_list[i].setAttribute('class', 'list-group-item list-group-item-danger');
       }
       else{
-        a_list[i].setAttribute('class', 'list-group-item list-group-item-success');
+        a_list[i].setAttribute('class', 'list-group-item');
       }
     }
   }
