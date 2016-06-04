@@ -1,27 +1,18 @@
 var models = require('../models');
 var socks = require('../socks');
 
-update_state = function(user_arg, room_id, state, use_in){ 
-  var user_list = [];
-  if (typeof(user_arg) == 'object'){
-    user_list = user_arg;
+update_state = function(user_list, room_id, state, use_in){ 
+  var where_option;
+  if (user_list.length <= 0){
+    where_option = {
+      room_id: (use_in ? 0: room_id)
+    };
   }
   else{
-    user_list = [user_arg];
-  }
-  var where_option;
-  if (use_in){
-    if (user_list.length <= 0){
-      where_option = {
-        room_id: room_id
-      };
-    }
-    else{
-      where_option = {
-        username: (use_in ? { $in: user_list}: { $notIn: user_list}),
-        room_id: room_id
-      };
-    }
+    where_option = {
+      username: (use_in ? { $in: user_list}: { $notIn: user_list}),
+      room_id: room_id
+    };
   }
   return models.sequelize.transaction(function(trx){
     return models.User.update({
@@ -29,6 +20,12 @@ update_state = function(user_arg, room_id, state, use_in){
     },{
       where : where_option,
       transaction: trx
+    }).then(function(result){
+      return models.User.findAll({
+        attrubte: ['username', 'description', 'state'],
+        where : where_option,
+        transaction : trx,
+      });
     });
   });
 }
@@ -114,18 +111,18 @@ module.exports = {
       }
     });
   },
-  select_room_id_from_user: function(handler, username){
+  select_user_info: function(handler, username){
     console.log('username: ' + username);
     models.User.findAll({
-      attributes: ['username', 'room_id'],
+      //attributes: ['username', 'description', 'state', 'room_id'],
       where : {
         username: username
       }
     }).then(function (result){
-      console.log(username + ' select room id from user success');
-      handler({worked: true, room_id: result[0].room_id});
+      console.log(username + ' select user info success');
+      handler({worked: true, user_info: result[0]});
     }).catch(function(error){//unexpected error
-      console.log(username + ' select room id from user error: ' + error);
+      console.log(username + ' select user info error: ' + error);
       handler({worked: false});
     });
   },
@@ -189,12 +186,25 @@ module.exports = {
     });
   },
   update_state_in_user_list: function(handler, user_arg, room_id, state){ 
-    console.log('update state username: ' + user_arg);
+    var user_list = (typeof(user_arg) == 'object') ? user_arg : [user_arg];
+    console.log('update state user_list: ' + user_list);
     console.log('update state room_id: ' + room_id);
     console.log('update state state: ' + state);
 
-    update_state(user_arg, room_id, state, true).then(function(result){
+    update_state(user_list, room_id, state, true).then(function(result){
       console.log(user_list+ ' update state success.');
+      console.log(result.length);
+      if (result.length && result.length > 0){
+        for (var i = 0; i < result.length; i++){
+          console.log(result[i]);
+          console.log(result[i].username);
+
+          socks.waiting_room.broadcast(room_id, {
+            type:state,
+            username: result[i].username
+          });
+        }
+      }
       handler({worked: true});
     }).catch(function(error){
       console.log(user_list+ ' update state error : ' + error.message);
@@ -202,14 +212,28 @@ module.exports = {
     });
   },
   update_state_not_in_user_list: function(handler, user_arg, room_id, state){ 
-    console.log('update state not in user list username: ' + user_arg);
+    var user_list = (typeof(user_arg) == 'object') ? user_arg : [user_arg];
+    console.log('update state not in user list user_list: ' + user_list);
     console.log('update state not in user list room_id: ' + room_id);
-    update_state(user_arg, room_id, state, false).then(function(result){
-      console.log(user_list+ ' update state success.');
+    console.log('update state state: ' + state);
+
+    update_state(user_list, room_id, state, false).then(function(result){
+      console.log(user_list+ ' update state not in user list success.');
+      console.log(result.length);
+      if (result.length && result.length > 0){
+        for (var i = 0; i < result.length; i++){
+          console.log(result[i].username);
+          socks.waiting_room.broadcast(room_id, {
+            type:state,
+            username: result[i].username
+          });
+        }
+      }
+      console.log(result.length);
       handler({worked: true});
     }).catch(function(error){
-      console.log(user_list+ ' update state error : ' + error.message);
+      console.log(user_list+ ' update state not in user list error : ' + error.message);
       handler({worked: false, reason:error.message});
     });
-  },
+  }
 };

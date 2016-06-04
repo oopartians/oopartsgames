@@ -10,7 +10,7 @@ var sock_list = {};
 var spark_info= {};
 
 var broadcast = function(room_id, data){
-  if (room_id == undefined){
+  if (room_id == undefined || sock_list[room_id] == undefined){
     return;
   }
   for (var i = 0; i < sock_list[room_id].length; i++){
@@ -23,12 +23,13 @@ var interval_object = setInterval(function(){
   for (var room_id in sock_list){
     var connected_user_list = [];
     var logic_user = require('../logic/user.js');
-    for (var i = 0; i < sock_list[room_id]; i++){
-      connected_user_list.push(spark_info[sock_list[room_id][i]].username);
+    console.log(sock_list[room_id].length);
+    for (var i = 0; i < sock_list[room_id].length; i++){
+      connected_user_list.push(spark_info[sock_list[room_id][i].id].username);
     }
     var result_handler = function(result){
       if (result.worked){
-        broadcast(room_id, {type: 'connection_check', connected_user_list: connected_user_list});
+        console.log('connection check success');
       }
       else{
         console.log('update state during connection check error : ' + result.reason);
@@ -46,31 +47,43 @@ module.exports = {
     var logic_room = require('../logic/room.js');
     var logic_user = require('../logic/user.js');
 
-    var result_handler = function(result){
+    var select_user_info_handler = function(result){
       if (result.worked){
-        var room_id = result.room_id;
+        var room_id = result.user_info.room_id;
+
         spark_info[spark.id] = {room_id: room_id, username: username};
         if (sock_list[room_id] == undefined){
           sock_list[room_id] = [];
         }
         sock_list[room_id].push(spark);
-        var result_handler = function(result){
+        var update_state_handler = function(result){
           if (result.worked){
-            spark.write({type: 'init', user_list: result.user_list});
+            var select_user_handler = function(result){
+              if (result.worked){
+                spark.write({type: 'init', user_list: result.user_list});
+              }
+              else{
+                spark.write({type: 'error', reason: result.reason});
+              }
+            };
+            logic_room.select_user_list_in_room(select_user_handler, room_id);
           }
           else{
             spark.write({type: 'error', reason: result.reason});
           }
         };
-        logic_room.select_user_list_in_room(result_handler, room_id);
+        logic_user.update_state_in_user_list(update_state_handler, username, room_id, 'unready');
       }
       else{
         spark.write({type: 'error', reason: result.reason});
       }
     };
-    logic_user.select_room_id_from_user(result_handler, username);
+    logic_user.select_user_info(select_user_info_handler, username);
   },
   recv: function(spark, data) {
+    if (spark_info[spark.id] == undefined){
+      return;
+    }
     var username = spark_info[spark.id].username;
     var room_id = spark_info[spark.id].room_id;
     console.log('recv');
@@ -81,17 +94,33 @@ module.exports = {
       return;
     }
     var logic_user = require('../logic/user.js');
-    var result_handler = function(result){
+    var logic_room = require('../logic/room.js');
+    var update_user_state_handler = function(result){
       if (result.worked){
-        broadcast(room_id, {type: data.type ? 'ready' : 'unready', username: username});
-        spark.write({type: 'commited'});
+        var update_room_state_handler= function(result){
+          if (result.worked){
+            console.log('check state all ready broadcast');
+            broadcast(room_id, {type: 'allready'});
+          }
+          else{
+            if (result.reason != ''){
+              console.log('check state all ready error : ' + result.reason);
+              spark.write({type: 'error', reason: result.reason});
+            }
+            else{
+              broadcast(room_id, {type: data.type ? 'ready' : 'unready', username: username});
+              spark.write({type: 'commited'});
+            }
+          }
+        };
+        logic_room.update_state_after_all_ready(update_room_state_handler, room_id);
       }
       else{
         console.log('update state from ready button error : ' + result.reason);
         spark.write({type: 'error', reason: result.reason});
       }
     };
-    logic_user.update_state_in_user_list(result_handler, username, room_id, data.type ? 'ready' : 'unready');
+    logic_user.update_state_in_user_list(update_user_state_handler, username, room_id, data.type ? 'ready' : 'unready');
   },
   broadcast: broadcast,
   close: function(spark, data) {
@@ -102,7 +131,8 @@ module.exports = {
         return;
       }
       sock_list[room_id].splice(sock_list[room_id].indexOf(spark),1);
-      delete spark_room_id[spark.id];
+      delete spark_info[spark.id];
+      broadcast(room_id, {type:'disconnected', username:username});
       if (sock_list[room_id].length <= 0){
         delete sock_list[room_id];
       }

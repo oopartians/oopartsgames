@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     username: { type: DataTypes.STRING, primaryKey : true, notNull: true},
     password: { type: DataTypes.STRING, notNull: true},
     description: { type: DataTypes.STRING, notNull: true},
-    state: { type: DataTypes.STRING}//ready unready disconnected
+    state: { type: DataTypes.STRING}//ready unready disconnected observing
   }, {
     comment : "This table is User's table who signed up.",
     classMethods: {

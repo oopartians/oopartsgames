@@ -16,6 +16,7 @@ html
     script(type='text/javascript', src='/javascripts/bootstrap-select-1.10.0/bootstrap-select.min.js')
     script(type='text/javascript', src='/javascripts/bootstrap-select-1.10.0/defaults-ko_KR.min.js')
     script(type='text/javascript', src='/javascripts/primus.js')
+    script(type='text/javascript', src='/javascripts/post.js')
     script(type='text/javascript', src='/javascripts/chat.js')
     
   body
@@ -31,7 +32,7 @@ html
         div(id="navbar", class="navbar-collapse collapse")
           ul(class="nav navbar-nav")
             if login_username
-              if joined_room_id
+              if room_info
                 li
                   a(href="/room/quit") Quit the room
               else

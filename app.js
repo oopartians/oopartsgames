@@ -49,6 +49,7 @@ app.use('/signin', require('./routes/signin'));
 app.use('/signup', require('./routes/signup'));
 app.use('/signout', require('./routes/signout'));
 app.use('/room', require('./routes/room'));
+app.use('/games', require('./routes/game'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

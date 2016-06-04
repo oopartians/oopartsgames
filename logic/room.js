@@ -57,6 +57,10 @@ check_and_increase_curr_player = function(trx, room_id, password){
       console.log(room_id + ' room is full');
       throw new Error("방에 플레이어가 너무 많습니다.");
     }
+    if (room_info.state != 'wait'){//room is already started
+      console.log(room_id + ' room is already started');
+      throw new Error("이미 시작된 게임에는 참가할 수 없습니다.");
+    }
     room_info.curr_player += 1;
     return room_info.updateAttributes({
       curr_player: room_info.curr_player
@@ -95,7 +99,9 @@ module.exports = {
       });
     }).then(function(result){
       console.log(room_id + ' join room success');
+
       socks.gamelobby.broadcast({type: "update", room_info: room_result.room_info});
+
       models.User.findAll({
         where: {
           username : username
@@ -106,6 +112,7 @@ module.exports = {
       }).catch(function(error){
         console.log(room_id + ' join room select user info error : '+ error.message);
       });
+
       handler({worked: true, room_info: room_result.room_info});
     }).catch(function(error){
       console.log(room_id + ' join room error: ' + error.message);
@@ -149,6 +156,7 @@ module.exports = {
         }
         console.log(username + ' joined ' + result[0].room_id);
         socks.gamelobby.broadcast({type: "add", room_info: result[0]});
+
         handler({worked: true, room_info: result[0]});
       }).catch(function(error){
         console.log(room_name + ' create error: ' + error);
@@ -179,7 +187,7 @@ module.exports = {
   },
   select_room_info: function(handler, room_id){
     models.sequelize.transaction(function(trx){
-      return models.Room.find({
+      return models.Room.findOne({
         where: {
           room_id: room_id
         },
@@ -191,6 +199,48 @@ module.exports = {
       handler({worked: true, room_info: result});
     }).catch(function(error){
       console.log(room_id + ' select room info error: ' + error.message);
+      handler({worked: false, reason: error.message});
+    });
+  },
+  update_state_after_all_ready: function(handler, room_id){
+    console.log('check state all ready room_id : ' + room_id);
+    models.sequelize.transaction(function(trx){
+      return models.User.findAll({
+        where : {
+          state : { $not : 'ready'},
+          room_id: room_id
+        },
+        transaction : trx,
+      }).then(function(result){
+        if (result.length > 0){
+          console.log(room_id + ' check state all ready fail: There are at least one unready user');
+          throw new Error('');
+        }
+        return models.Room.findAll({
+          where: {
+            room_id: Number(room_id)
+          },
+          include: [models.Game],
+          transaction: trx,
+          lock: trx.LOCK.UPDATE
+        }).then(function(result){
+          if (result[0].curr_player < result[0].Game.min_player){
+            console.log(room_id + ' check state all ready fail: The number of readied user cannot satisfy min_player.');
+            throw new Error('');
+          }
+          return result[0].updateAttributes({
+            state: 'game'
+          },{
+            transaction: trx,
+                 where:{room_id: room_id}
+          });
+        });
+      });
+    }).then(function(result){
+      console.log(room_id + ' check state all ready success');
+      handler({worked: true, doGame: true});
+    }).catch(function(error){
+      console.log(room_id + ' check state all ready error : ' + error.message);
       handler({worked: false, reason: error.message});
     });
   }

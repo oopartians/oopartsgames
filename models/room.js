@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
     main_time: { type: DataTypes.DOUBLE, notNull: true},
     num_byoyomi: { type: DataTypes.INTEGER, notNull: true},
     byoyomi: { type: DataTypes.DOUBLE, notNull: true},
-    state: { type: DataTypes.STRING, notNull: true},
+    state: { type: DataTypes.STRING, notNull: true} //wait, game
   }, {
     comment : "This table is Room which means a unit of playing a game.",
     classMethods: {

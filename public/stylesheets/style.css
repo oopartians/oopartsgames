@@ -527,7 +527,7 @@ body{
   position: static;
 }
 
-.show-case .navbar .container{
+.navbar .container{
   width: auto;
 }
 
@@ -704,4 +704,15 @@ img {
 }
 .slick-form-li{
 	padding-left: 40px;
+}
+
+#game-area-div{
+  width: 100%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+#game-area-div > canvas{
+  display: block;
+  margin: auto;
 }

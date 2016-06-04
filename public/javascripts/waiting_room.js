@@ -8,6 +8,7 @@ primus.on("open", function(){
 primus.on("data", function(data){
   var a_list = $("#user-list-div a"); 
   if (data.type == "init"){
+    $("#user-list-div").empty();
     for (var i = 0; i < data.user_list.length; i++){
       var state = data.user_list[i].state == 'ready' ? ' list-group-item-info' :
                   data.user_list[i].state == 'disconnected' ? ' list-group-item-danger' : '';
@@ -26,16 +27,6 @@ primus.on("data", function(data){
       confirmButtonClass: 'btn-info'
     });
   }
-  else if (data.type == "connection_check"){
-    for (var i = 0; i < a_list.length; i++){
-      if (jQuery.inArray(a_list[i].innerHTML, data.connected_user_list) == -1){
-        a_list[i].setAttribute('class', 'list-group-item list-group-item-danger');
-      }
-      else{
-        a_list[i].setAttribute('class', 'list-group-item');
-      }
-    }
-  }
   else if (data.type == "join"){
     $("#user-list-div").append(
       "<a href='#' class='list-group-item' onclick=\"user_info_confirm('" +
@@ -47,6 +38,9 @@ primus.on("data", function(data){
     is_ready = !is_ready;
     $("#input-submit").text(is_ready ? "준비해제" : "준비");
   }
+  else if (data.type == 'allready'){
+    post('/games/loading', {});
+  }
   else{
     for (var i = 0; i < a_list.length; i++){
       if (a_list[i].innerHTML == data.username){
@@ -57,6 +51,10 @@ primus.on("data", function(data){
         }
         else if (data.type == "unready"){
           a_list[i].setAttribute('class', 'list-group-item');
+          break;
+        }
+        else if (data.type == "disconnected"){
+          a_list[i].setAttribute('class', 'list-group-item list-group-item-danger');
           break;
         }
         else if (data.type == "quit"){

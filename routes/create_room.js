@@ -6,9 +6,9 @@ var logic_game = require('../logic/game.js');
 var logic_user = require('../logic/user.js');
 
 router.get('/', function(req, res){
-  var check_already_in_handler = function(result){
-    if (result.worked && result.room_id){
-      res.redirect('/room/' + result.room_id);
+  var select_user_info_handler= function(result){
+    if (result.worked && result.user_info.room_id){
+      res.redirect('/room/' + result.user_info.room_id);
     }
     else{
       var result_handler = function(result){
@@ -25,15 +25,24 @@ router.get('/', function(req, res){
       logic_game.select_all_games(result_handler);
     }
   };
-  logic_user.select_room_id_from_user(check_already_in_handler, req.session.login_username);
+  logic_user.select_user_info(select_user_info_handler, req.session.login_username);
 });
 
 router.post('/', function(req, res){
   console.log(JSON.stringify(req.body));
+  if (req.body == undefined ||
+    req.body.game_name == undefined ||
+    req.body.room_name == undefined ||
+    req.body.password == undefined ||
+    req.body.main_time == undefined ||
+    req.body.byoyomi == undefined ||
+    req.body.num_byoyomi == undefined ){
+      res.redirect('/');
+  }
 
-  var check_already_in_handler = function(result){
-    if (result.worked && result.room_id){
-      res.redirect('/room/' + result.room_id);
+  var select_user_info_handler = function(result){
+    if (result.worked && result.user_info.room_id){
+      res.redirect('/room/' + result.user_info.room_id);
     }
     else{
       var result_handler = function(result){
@@ -77,7 +86,7 @@ router.post('/', function(req, res){
       );
     }
   };
-  logic_user.select_room_id_from_user(check_already_in_handler, req.session.login_username);
+  logic_user.select_user_info(select_user_info_handler, req.session.login_username);
 });
 
 module.exports = router;

@@ -11,9 +11,9 @@ router.get('/', function(req, res){
     delete req.session.join_room_failed_reason;
   }
 
-  var check_already_in_handler = function(result){
-    if (result.worked && result.room_id){
-      res.redirect('/room/' + result.room_id);
+  var select_user_info_handler= function(result){
+    if (result.worked && result.user_info.room_id){
+      res.redirect('/room/' + result.user_info.room_id);
     }
     else{
       res.render('gamelobby', {
@@ -22,14 +22,19 @@ router.get('/', function(req, res){
       });
     }
   }
-  logic_user.select_room_id_from_user(check_already_in_handler, req.session.login_username);
+  logic_user.select_user_info(select_user_info_handler, req.session.login_username);
 });
 
 router.post('/', function(req, res){
   console.log(JSON.stringify(req.body));
-  var check_already_in_handler = function(result){
-    if (result.worked && result.room_id){
-      res.redirect('/room/' + result.room_id);
+  if (req.body == undefined ||
+      req.body.room_id == undefined ||
+      req.body.password == undefined){
+    res.redirect('/');
+  }
+  var select_user_info_handler = function(result){
+    if (result.worked && result.user_info.room_id){
+      res.redirect('/room/' + result.user_info.room_id);
     }
     else{
       var result_handler = function(result){
@@ -49,7 +54,7 @@ router.post('/', function(req, res){
       );
     }
   };
-  logic_user.select_room_id_from_user(check_already_in_handler, req.session.login_username);
+  logic_user.select_user_info(select_user_info_handler, req.session.login_username);
 });
 
 module.exports = router;

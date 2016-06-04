@@ -29,6 +29,12 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
   console.log(JSON.stringify(req.body));
+  if (req.body == undefined ||
+      req.body.username == undefined ||
+      req.body.password == undefined ||
+      req.body.description == undefined){
+      res.redirect('/');
+  }
 
   result_handler = function(result){
     if (result.worked){
