@@ -5,14 +5,22 @@ var HEIGHT = $('#game-area-div').innerHeight();
 
 var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, 'game-area-div', { preload: preload, create: create });
 
-var GEM_SIZE = 64;
-var GEM_SPACING = 2;
+var RSP_FRAME_NUMBER = {
+  'r' : 0,
+  'p' : 1,
+  's' : 2,
+}
+var RSP_FRAME_WIDTH = 111;
+var RSP_FRAME_HEIGHT = 151;
 var GEM_SIZE_SPACED = GEM_SIZE + GEM_SPACING;
 var BOARD_COLS;
 var BOARD_ROWS;
 var MATCH_MIN = 3; // min number of same color gems required in a row to be considered a match
 
-var gems;
+var cardlist;
+var cards;
+var card_spacing_width;
+var card_spacing_height;
 var selectedGem = null;
 var selectedGemStartPos;
 var selectedGemTween;
@@ -20,24 +28,37 @@ var tempShiftedGem = null;
 var allowInput;
 
 function preload() {
-  game.load.spritesheet("GEMS", "rsp/diamonds32x5.png", GEM_SIZE, GEM_SIZE);
+  game.load.spritesheet("RSPS", "rsp/rsp111x151.jpeg", RSP_FRAME_WIDTH, RSP_FRAME_HEIGHT);
 }
 
 function create() {
-
-  // fill the screen with as many gems as possible
-  spawnBoard();
-
+  ready_cards();
   // currently selected gem starting position. used to stop player form moving gems too far.
-  selectedGemStartPos = { x: 0, y: 0 };
+  //selectedGemStartPos = { x: 0, y: 0 };
 
   // used to disable input while gems are dropping down and respawning
   allowInput = true;
 
-  game.input.addMoveCallback(slideGem, this);
-
+//  game.input.addMoveCallback(slideGem, this);
 }
 
+function ready_cards(){
+  cardlist = ['r', 'r', 'r', 's', 's', 's', 'p', 'p', 'p'];
+  cards = game.add.group();
+
+  card_spacing_width = Math.floor(game.world.width / cardlist.length);
+  card_spacing_height = Math.floor(game.world.height / 5);
+  for (var i = 0; i < cardlist.length; i++){
+    var card = cards.create(i * card_spacing_width, game.world.height - card_spacing_height, "RSPS");
+    card.name = cardlist[i];
+    //card.inputEnabled = true;
+    //card.events.onInputDown.add(selectGem, this);
+    //card.events.onInputUp.add(releaseGem, this);
+    card.frame = RSP_FRAME_NUMBER[cardlist[i]]; //game.rnd.integerInRange(0, gem.animations.frameTotal - 1);
+    //setGemPos(card, i, i); // each gem has a position on the board
+  }
+}
+/*
 function releaseGem() {
 
   if (tempShiftedGem === null) {
@@ -135,7 +156,6 @@ function spawnBoard() {
       setGemPos(gem, i, j); // each gem has a position on the board
     }
   }
-
 }
 
 // select a gem and remember its starting position
@@ -439,3 +459,4 @@ function boardRefilled() {
   allowInput = true;
 
 }
+*/
