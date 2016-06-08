@@ -1,2 +1,14 @@
-create database oopartsgames
+1. 첫 설치
+sudo apt-get install mariadb-server
+mysql -u root -p
+create database oopartsgames;
 alter database oopartsgames character set utf8 collate utf8_general_ci;
+create user 'oopartsgames'@'localhost' identified by 'ooparts';
+grant all privileges on oopartsgames.* to 'oopartsgames'@'localhost' identified by 'ooparts';
+exit
+
+2. model 수정 이후 재시작시
+mysql -u oopartsgames -p
+use oopartsgames;
+drop table Users, Rooms, Games;
+exit
