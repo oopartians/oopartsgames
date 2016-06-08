@@ -20,7 +20,7 @@ var tempShiftedGem = null;
 var allowInput;
 
 function preload() {
-  game.load.spritesheet("GEMS", "rsp/diamonds32x5.png", GEM_SIZE, GEM_SIZE);
+  game.load.spritesheet("GEMS", "gem/diamonds32x5.png", GEM_SIZE, GEM_SIZE);
 }
 
 function create() {
