@@ -1,10 +1,29 @@
 "use strict";
 
+var configs = {
+  "development": {
+    "dialect": "sqlite",
+    "storage": "./db.development.sqlite"
+  },
+  "production": {
+    "username": process.env.OPENSHIFT_MYSQL_DB_USERNAME || "oopartsgames",
+    "password": process.env.OPENSHIFT_MYSQL_DB_PASSWORD || "ooparts",
+    "database": process.env.OPENSHIFT_APP_NAME || "oopartsgames",
+    "host": process.env.OPENSHIFT_MYSQL_DB_HOST || "localhost",
+    "port": process.env.OPENSHIFT_MYSQL_DB_PORT || 3306,
+    "dialect": "mysql",
+    "define": {
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
+    }
+  }
+};
+
 var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
 var env       = process.env.NODE_ENV || "production";
-var config    = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
+var config = configs[env];
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db        = {};
 
