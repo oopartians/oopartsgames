@@ -17,8 +17,8 @@ var primus_session = require('../middleware/primus_session');
  * Get port from environment and store in Express.
  */
 
-var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080;
-var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port = normalizePort(process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080);
+var ip = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 app.set('port', port);
 app.set('ip', ip);
 
@@ -79,6 +79,7 @@ primus.save(__dirname + '/../public/javascripts/primus.js');
  */
 models.sequelize.sync().then(function(){
 	server.listen(port, ip);
+  console.log(ip + ':' + port + ' server start');
 	server.on('error', onError);
 	server.on('listening', onListening);
 });
