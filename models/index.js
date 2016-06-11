@@ -1,6 +1,6 @@
 "use strict";
 
-var env       = process.env.NODE_ENV || "mysql";
+var env       = process.env.NODE_ENV || "postgresql";
 
 var configs = {
   "development": {
