@@ -78,6 +78,7 @@ primus.save(__dirname + '/../public/javascripts/primus.js');
  * Listen on provided port, on all network interfaces.
  */
 models.sequelize.sync().then(function(){
+  models.init_row();
 	server.listen(port, ip);
   console.log(ip + ':' + port + ' server start');
 	server.on('error', onError);

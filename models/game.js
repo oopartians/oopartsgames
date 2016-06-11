@@ -12,6 +12,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Game.hasMany(models.Room, {foreignKey: 'game_name'});
+      },
+      init_row: function(models) {
         Game.findOrCreate({
           where:{
             game_name: "가위바위보"
@@ -50,7 +52,7 @@ module.exports = function(sequelize, DataTypes) {
           }
         });
         */
-      }
+      },
     }
   });
 
