@@ -98,7 +98,7 @@ module.exports = {
     }).then(function(result){
       console.log(username+ ' quit room success');
       socks.gamelobby.broadcast({type: type, room_info: room_info});
-      socks.waiting_room.broadcast(room_info.room_id, {type: 'quit', username: user_info.username});
+      socks.room.broadcast(room_info.room_id, {type: 'quit', username: user_info.username});
       handler({worked: true});
     }).catch(function(error){
       if (error.message == ''){//the user is already out of room.
@@ -185,7 +185,7 @@ module.exports = {
       }
     });
   },
-  update_state_in_user_list: function(handler, user_arg, room_id, state){ 
+  update_state_in_user_list: function(handler, user_arg, room_id, sock_name, state){ 
     var user_list = (typeof(user_arg) == 'object') ? user_arg : [user_arg];
     console.log('update state user_list: ' + user_list);
     console.log('update state room_id: ' + room_id);
@@ -199,7 +199,7 @@ module.exports = {
           console.log(result[i]);
           console.log(result[i].username);
 
-          socks.waiting_room.broadcast(room_id, {
+          socks[sock_name].broadcast(room_id, {
             type:state,
             username: result[i].username
           });
@@ -207,11 +207,10 @@ module.exports = {
       }
       handler({worked: true});
     }).catch(function(error){
-      console.log(user_list+ ' update state error : ' + error.message);
-      handler({worked: false, reason:error.message});
+      console.log(user_list+ ' update state error : ' + error.message); handler({worked: false, reason:error.message});
     });
   },
-  update_state_not_in_user_list: function(handler, user_arg, room_id, state){ 
+  update_state_not_in_user_list: function(handler, user_arg, room_id, sock_name, state){ 
     var user_list = (typeof(user_arg) == 'object') ? user_arg : [user_arg];
     console.log('update state not in user list user_list: ' + user_list);
     console.log('update state not in user list room_id: ' + room_id);
@@ -223,7 +222,7 @@ module.exports = {
       if (result.length && result.length > 0){
         for (var i = 0; i < result.length; i++){
           console.log(result[i].username);
-          socks.waiting_room.broadcast(room_id, {
+          socks[sock_name].broadcast(room_id, {
             type:state,
             username: result[i].username
           });

@@ -2,7 +2,7 @@ var primus = Primus.connect();
 var is_ready = false;
 
 primus.on("open", function(){
-  primus.write({ action: 'join', room: 'waiting_room'});
+  primus.write({ action: 'join'});
 });
 
 primus.on("data", function(data){
@@ -75,9 +75,11 @@ function user_info_confirm(username, description){
 }
 
 $("#input-submit").click(function(){
-  primus.write({room: "waiting_room", data:{
-    type: !is_ready
-  }});
+  primus.write({
+    data:{
+      type: !is_ready
+    }
+  });
 });
 
 //alert('성공');

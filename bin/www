@@ -44,7 +44,7 @@ primus.on('connection', function(spark){
   spark.on('data', function(data){
     data = data || {};
     var action = data.action;
-    var room = data.room;
+    var room = data.room || 'room';
     if ('join' === action){
       spark.join(room, function(){
         console.log(spark.id + ' joined ' + room);
