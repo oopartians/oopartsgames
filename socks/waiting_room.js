@@ -51,5 +51,8 @@ module.exports = {
       }
     };
     logic_user.update_state_in_user_list(update_user_state_handler, username, room_id, "room", data.type ? 'ready' : 'unready');
+  },
+  quit: function(sock_func, username, room_id) {
+    sock_func.broadcast(room_id, {type: 'quit', username: username});
   }
 };

@@ -38,6 +38,18 @@ module.exports = function(sequelize, DataTypes) {
             max_player: "1"
           }
         });
+        Game.findOrCreate({
+          where:{
+            game_name: "오목"
+          },
+          defaults: {
+            game_name: "오목",
+            eng_name: "omok",
+            description: "흑백이 번갈아가며 두어, 5개의 돌을 나란히 둔 사람이 승리합니다.",
+            min_player: "2",
+            max_player: "2"
+          }
+        });
         /*
         Game.findOrCreate({
           where:{

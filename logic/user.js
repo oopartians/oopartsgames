@@ -56,7 +56,7 @@ module.exports = {
           throw new Error('');
         }
         return models.Room.findAll({
-          attributes: ['room_id', 'curr_player'],
+          //attributes: ['room_id', 'curr_player'],
           where: {
             room_id: Number(user_info.room_id)
           },
@@ -97,8 +97,8 @@ module.exports = {
       });
     }).then(function(result){
       console.log(username+ ' quit room success');
-      socks.gamelobby.broadcast({type: type, room_info: room_info});
-      socks.room.broadcast(room_info.room_id, {type: 'quit', username: user_info.username});
+      socks.gamelobby.broadcast({type: type, room_info: {room_id : room_info.room_id, curr_player: room_info.curr_player}});
+      socks.room.quit(room_info, user_info.username);
       handler({worked: true});
     }).catch(function(error){
       if (error.message == ''){//the user is already out of room.

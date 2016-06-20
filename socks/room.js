@@ -2,7 +2,7 @@
 
 var sock_games = require('./games');
 var sock_waiting_room = require('./waiting_room');
-var connection_check_time_in_waiting_room = 5000;
+var connection_check_time_in_waiting_room = 100000;
 /*
  * concurrent access will not be problem with this model.
  * REFERENCE : http://stackoverflow.com/questions/3776282/is-concurrent-access-to-shared-array-a-problem-in-node-js
@@ -74,7 +74,7 @@ module.exports = {
             var update_state_handler = function(result){
               if (result.worked){
                 if (room_info.state == 'game'){
-                  sock_games[room_info.eng_name].open(sock_func, username, room_id);
+                  sock_games[room_info.Game.eng_name].open(sock_func, username, room_id);
                 }
                 else if (room_info.state == 'wait'){
                   sock_waiting_room.open(sock_func, username, room_id);
@@ -115,7 +115,7 @@ module.exports = {
     var select_room_info_handler = function(result){
       if (result.worked){
         if (result.room_info.state == 'game'){
-          sock_games[room_info.eng_name].recv(sock_func, username, room_id, data);
+          sock_games[result.room_info.eng_name].recv(sock_func, username, room_id, data);
         }
         else{ //if (room_info.state == 'wait'){
           sock_waiting_room.recv(sock_func, username, room_id, data);
@@ -129,7 +129,15 @@ module.exports = {
   },
   broadcast: sock_func.broadcast,
   unicast: sock_func.unicast,
-  close: function(spark, data) {
+  quit: function(room_info, username){//User quit the room on purpose.
+    if (room_info.state == 'game'){
+      sock_games[room_info.eng_name].quit(sock_func, username, room_info.room_id);
+    }
+    else{ //if (room_info.state == 'wait'){
+      sock_waiting_room.quit(sock_func, username, room_info.room_id);
+    }
+  },
+  close: function(spark, data) {//User has been disconnected because of various reasons.
     try{
       var username = spark_info[spark.id].username;
       var room_id = spark_info[spark.id].room_id;
